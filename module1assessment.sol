@@ -3,25 +3,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-contract ErrorHandlingContract {
-    uint public  value;
-
-    function setValue(uint newValue) external {
-        require(newValue > value, "New value must be greater than the current value");
-        assert(newValue != 0);
-        value = newValue;
+contract DivideByZero {
+    function divide(uint256 numerator, uint256 denominator) public pure returns (uint256) {
+        require(denominator != 0, "Division by zero is not allowed");
+        return numerator / denominator;
     }
-
-    function getValue() external view returns (uint) {
-        return value;
+    
+    function divideWithAssert(uint256 numerator, uint256 denominator) public pure returns (uint256) {
+        assert(denominator != 0);
+        return numerator / denominator;
     }
-
-    function withdraw(uint amount) external {
-        require(amount <= value, "Insufficient balance");
-        value -= amount;
-
-        if (value == 0) {
-            revert("Value reached zero");
+    
+    function divideWithRevert(uint256 numerator, uint256 denominator) public pure returns (uint256) {
+        if (denominator == 0) {
+            revert("Division by zero is not allowed");
         }
+        return numerator / denominator;
     }
 }
