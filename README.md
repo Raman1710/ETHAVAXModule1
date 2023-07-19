@@ -1,45 +1,54 @@
-# ETHAVAXModule1
+# FunctionErrorHandling Smart Contract
 
-Certainly! Here's an example of a README file for the given Solidity code:
+The `FunctionErrorHandling` smart contract contains three functions, each illustrating different error handling mechanisms available in Solidity: `require()`, `assert()`, and `revert()`.
 
-# DivideByZero Smart Contract
+## Function Details
 
-The `DivideByZero` smart contract provides division operations with error handling for division by zero. It is implemented in Solidity, a programming language for writing smart contracts on the Ethereum blockchain.
+### requireexample
 
-## Functions
+```solidity
+function requireexample(uint x) public pure returns (bool){
+        require(x%2==0,"Number must be Even.");
+        return true;
+    }
+```
 
-The contract contains the following functions:
+This function checks whether the input number `x` is even or not. If the condition is not met, it throws an error with the message "Number must be Even." The function returns `true` if the requirement is satisfied.
 
-### `divide(uint256 numerator, uint256 denominator)`
+### assertexample
 
-This function performs division of two unsigned integers: `numerator` and `denominator`. It returns the result of the division.
+```solidity
+function assertexample(uint x, uint y) public pure returns(bool){
+        assert(x+y<50);
+        return true;
+    }
+```
 
-- Parameters:
-  - `numerator`: The dividend for the division.
-  - `denominator`: The divisor for the division.
+This function takes two input numbers `x` and `y`, and it checks whether their sum is less than 50. If the condition is not met, it throws an error, and the entire transaction will be reverted. The function returns `true` if the assertion is successful.
 
-Before performing the division, this function checks if the `denominator` is not equal to zero using the `require` statement. If the `denominator` is zero, it raises an exception with the error message "Division by zero is not allowed."
+### revertexample
 
-### `divideWithAssert(uint256 numerator, uint256 denominator)`
+```solidity
+function revertexample(uint x) public pure returns(bool){ 
+        if(x<=10){
+            revert("Number must be greater than 10.");
+        }
+        return true;
+    }
+```
 
-Similar to the `divide` function, this function also performs division of two unsigned integers: `numerator` and `denominator`. It returns the result of the division.
+This function verifies whether the input number `x` is greater than 10. If the condition is not met, the function will revert the entire transaction with the message "Number must be greater than 10." The function returns `true` if the check passes successfully.
 
-- Parameters:
-  - `numerator`: The dividend for the division.
-  - `denominator`: The divisor for the division.
+## Error Handling
 
-However, instead of using the `require` statement, this function uses the `assert` statement to check if the `denominator` is not equal to zero. If the `denominator` is zero, it triggers an assertion failure, causing the transaction to revert. This means that if the condition fails, the function terminates abruptly, and any changes made within the function are discarded.
+In Solidity, error handling is crucial for writing secure smart contracts. The three mechanisms demonstrated in this contract serve different purposes:
 
-### `divideWithRevert(uint256 numerator, uint256 denominator)`
+- `require()`: Used for validating user inputs or preconditions. If the requirement fails, the transaction is reverted, and the gas is refunded to the sender.
 
-This function also performs division of two unsigned integers: `numerator` and `denominator`. It returns the result of the division.
+- `assert()`: Used to check for internal errors or invariants that should never be false. If an assertion fails, the transaction is reverted, and any remaining gas is lost.
 
-- Parameters:
-  - `numerator`: The dividend for the division.
-  - `denominator`: The divisor for the division.
+- `revert()`: Used to explicitly revert the state changes when certain conditions are not met. It allows you to provide a custom error message to explain the reason for the revert.
 
-Using an if statement, this function checks if the `denominator` is zero. If the `denominator` is zero, it calls the `revert` function with the error message "Division by zero is not allowed." Revert reverts all changes made to the state and discards the current transaction. If the `denominator` is non-zero, the division is performed, and the result is returned.
+**License**
 
-## License
-
-The code in this repository is licensed under the MIT License. You can use, modify, and distribute it under the terms and conditions specified in the license.
+This smart contract is released under the MIT License. See [LICENSE](link_to_license_file) for more details.
