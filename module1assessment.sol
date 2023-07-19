@@ -1,23 +1,22 @@
-//write a smart contract that implements the require(), assert() and revert() statements.
-
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.18;
 
-contract DivideByZero {
-    function divide(uint256 numerator, uint256 denominator) public pure returns (uint256) {
-        require(denominator != 0, "Division by zero is not allowed");
-        return numerator / denominator;
+contract FunctionErrorHandling {
+
+    function requireexample(uint x) public pure returns (bool){
+        require(x%2==0,"Number must be Even.");
+        return true;
     }
-    
-    function divideWithAssert(uint256 numerator, uint256 denominator) public pure returns (uint256) {
-        assert(denominator != 0);
-        return numerator / denominator;
+
+    function assertexample(uint x, uint y) public pure returns(bool){
+        assert(x+y<50);
+        return true;
     }
-    
-    function divideWithRevert(uint256 numerator, uint256 denominator) public pure returns (uint256) {
-        if (denominator == 0) {
-            revert("Division by zero is not allowed");
+
+    function revertexample(uint x) public pure returns(bool){ 
+        if(x<=10){
+            revert("Number must be greater than 10.");
         }
-        return numerator / denominator;
+        return true;
     }
 }
